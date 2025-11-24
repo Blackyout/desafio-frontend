@@ -199,5 +199,5 @@ CMD ["nginx", "-g", "daemon off;"]
 ## Soporte
 
 Para problemas o preguntas sobre el backend Django, consulte la documentación de la API en:
-- http://api.maestriaia/api/docs/
+- http://api.maestriaia.com/api/docs/
 "# desafio-frontend" 
