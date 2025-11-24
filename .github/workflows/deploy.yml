@@ -33,7 +33,8 @@ jobs:
         # --base-href /desafio-frontend/ es OBLIGATORIO para que carguen los estilos/JS
         run: npm run build -- --configuration production --base-href /desafio-frontend/
 
-	- name: Crear archivo 404 para redirección
+
+      - name: Crear archivo 404 para redirección
         # Copiamos index.html a 404.html en la misma carpeta de salida
         run: cp dist/demo/browser/index.html dist/demo/browser/404.html
 
