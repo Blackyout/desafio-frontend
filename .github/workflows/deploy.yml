@@ -1,0 +1,53 @@
+name: Desplegar Angular a GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.19.1'
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Compilar proyecto
+        # --base-href /desafio-frontend/ es OBLIGATORIO para que carguen los estilos/JS
+        run: npm run build -- --configuration production --base-href /desafio-frontend/
+
+      - name: Subir artefacto
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # AQUÍ ESTÁ EL CAMBIO IMPORTANTE:
+          # 1. "demo" porque así se llama tu proyecto en angular.json
+          # 2. "/browser" porque usas el builder "@angular/build:application"
+          path: dist/demo/browser
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Desplegar a GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
