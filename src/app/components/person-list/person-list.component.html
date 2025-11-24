@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="header">
+    <h1>Personas</h1>
+    <a routerLink="/persons/new" class="btn btn-primary">Nueva Persona</a>
+  </div>
+
+  <div class="filters">
+    <div class="filter-group">
+      <input
+        type="text"
+        [(ngModel)]="emailFilter"
+        placeholder="Filtrar por email"
+        class="input"
+      />
+      <input
+        type="text"
+        [(ngModel)]="lastNameFilter"
+        placeholder="Filtrar por apellido"
+        class="input"
+      />
+      <select [(ngModel)]="ordering" class="select">
+        <option value="created_at">Fecha: más antigua primero</option>
+        <option value="-created_at">Fecha: más reciente primero</option>
+        <option value="first_name">Nombre: A-Z</option>
+        <option value="-first_name">Nombre: Z-A</option>
+        <option value="last_name">Apellido: A-Z</option>
+        <option value="-last_name">Apellido: Z-A</option>
+      </select>
+      <button (click)="applyFilters()" class="btn btn-secondary">Aplicar</button>
+      <button (click)="clearFilters()" class="btn btn-outline">Limpiar</button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Cargando personas...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && persons.length === 0" class="empty-state">
+    <p>No se encontraron personas</p>
+    <a routerLink="/persons/new" class="btn btn-primary">Crear primera persona</a>
+  </div>
+
+  <div *ngIf="!loading && persons.length > 0" class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>Fecha de Creación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of persons">
+          <td>{{ person.first_name }}</td>
+          <td>{{ person.last_name }}</td>
+          <td>{{ person.email }}</td>
+          <td>{{ person.created_at | date:'short' }}</td>
+          <td class="actions">
+            <a [routerLink]="['/persons', person.id, 'edit']" class="btn-icon" title="Editar">
+              ✏️
+            </a>
+            <button (click)="deletePerson(person)" class="btn-icon" title="Eliminar">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <button
+        (click)="previousPage()"
+        [disabled]="!hasPrevious"
+        class="btn btn-secondary"
+      >
+        Anterior
+      </button>
+      <span class="page-info">
+        Página {{ currentPage }} de {{ totalPages }} ({{ totalCount }} total)
+      </span>
+      <button
+        (click)="nextPage()"
+        [disabled]="!hasNext"
+        class="btn btn-secondary"
+      >
+        Siguiente
+      </button>
+    </div>
+  </div>
+</div>

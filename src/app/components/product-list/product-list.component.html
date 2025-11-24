@@ -1,0 +1,120 @@
+<div class="container">
+  <div class="header">
+    <h1>Productos</h1>
+    <a routerLink="/products/new" class="btn btn-primary">Nuevo Producto</a>
+  </div>
+
+  <div class="filters">
+    <div class="filter-group">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Buscar por nombre"
+        class="input"
+      />
+      <input
+        type="text"
+        [(ngModel)]="skuFilter"
+        placeholder="Filtrar por SKU"
+        class="input"
+      />
+      <input
+        type="number"
+        [(ngModel)]="priceMinFilter"
+        placeholder="Precio mín."
+        class="input input-small"
+        min="0"
+        step="0.01"
+      />
+      <input
+        type="number"
+        [(ngModel)]="priceMaxFilter"
+        placeholder="Precio máx."
+        class="input input-small"
+        min="0"
+        step="0.01"
+      />
+      <select [(ngModel)]="ordering" class="select">
+        <option value="created_at">Fecha: más antigua primero</option>
+        <option value="-created_at">Fecha: más reciente primero</option>
+        <option value="name">Nombre: A-Z</option>
+        <option value="-name">Nombre: Z-A</option>
+        <option value="price">Precio: menor a mayor</option>
+        <option value="-price">Precio: mayor a menor</option>
+      </select>
+      <button (click)="applyFilters()" class="btn btn-secondary">Aplicar</button>
+      <button (click)="clearFilters()" class="btn btn-outline">Limpiar</button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Cargando productos...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && products.length === 0" class="empty-state">
+    <p>No se encontraron productos</p>
+    <a routerLink="/products/new" class="btn btn-primary">Crear primer producto</a>
+  </div>
+
+  <div *ngIf="!loading && products.length > 0" class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>SKU</th>
+          <th>Precio</th>
+          <th>Propietario</th>
+          <th>Fecha de Creación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.name }}</td>
+          <td><code>{{ product.sku }}</code></td>
+          <td class="price">${{ product.price | number:'1.2-2' }}</td>
+          <td>
+            <span *ngIf="product.owner">
+              {{ ownerNames[product.owner] || 'Cargando...' }}
+            </span>
+            <span *ngIf="!product.owner" class="text-muted">Sin propietario</span>
+          </td>
+          <td>{{ product.created_at | date:'short' }}</td>
+          <td class="actions">
+            <a [routerLink]="['/products', product.id, 'edit']" class="btn-icon" title="Editar">
+              ✏️
+            </a>
+            <button (click)="deleteProduct(product)" class="btn-icon" title="Eliminar">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <button
+        (click)="previousPage()"
+        [disabled]="!hasPrevious"
+        class="btn btn-secondary"
+      >
+        Anterior
+      </button>
+      <span class="page-info">
+        Página {{ currentPage }} de {{ totalPages }} ({{ totalCount }} total)
+      </span>
+      <button
+        (click)="nextPage()"
+        [disabled]="!hasNext"
+        class="btn btn-secondary"
+      >
+        Siguiente
+      </button>
+    </div>
+  </div>
+</div>

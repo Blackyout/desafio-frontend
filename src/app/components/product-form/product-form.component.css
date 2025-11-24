@@ -1,0 +1,139 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #1a202c;
+}
+
+.error-message {
+  background: #fed7d7;
+  color: #c53030;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.form-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #2d3748;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: #3182ce;
+}
+
+.input.error {
+  border-color: #e53e3e;
+}
+
+.select:disabled {
+  background: #f7fafc;
+  cursor: not-allowed;
+}
+
+.error-text {
+  display: block;
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.help-text {
+  display: block;
+  color: #718096;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: #3182ce;
+  color: white;
+  flex: 1;
+}
+
+.btn-primary:hover {
+  background: #2c5282;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #e2e8f0;
+  color: #2d3748;
+}
+
+.btn-secondary:hover {
+  background: #cbd5e0;
+}
+
+.btn-outline {
+  background: white;
+  color: #2d3748;
+  border: 1px solid #cbd5e0;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-outline:hover {
+  background: #f7fafc;
+}
