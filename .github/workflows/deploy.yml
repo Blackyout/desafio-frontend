@@ -31,7 +31,7 @@ jobs:
 
       - name: Compilar proyecto
         # --base-href /desafio-frontend/ es OBLIGATORIO para que carguen los estilos/JS
-        run: npm run build -- --configuration production --base-href /desafio-frontend/
+        run: npm run build -- --configuration production --base-href /
 
 
       - name: Crear archivo 404 para redirección
