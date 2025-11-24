@@ -18,14 +18,13 @@ npm install
 
 ### Configurar API Backend
 
-Edite los archivos de entorno para configurar la URL de la API:
+configuracion de la URL de la API:
 
 **src/environments/environment.ts** (desarrollo):
 ```typescript
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://api.maestriaia.com/api/v1'  // Cambie esta URL según su backend
-};
+  apiBaseUrl: 'https://api.maestriaia.com/api/v1'
 ```
 
 **src/environments/environment.prod.ts** (producción):
@@ -130,10 +129,6 @@ La aplicación incluye un interceptor HTTP que:
 - Muestra mensajes amigables al usuario
 - Registra errores en la consola para debugging
 
-## CORS
-
-Asegúrese de que el backend Django tenga configurado CORS correctamente para permitir peticiones desde el frontend.
-
 ## Características Técnicas
 
 - **Angular 20** con standalone components
@@ -145,54 +140,11 @@ Asegúrese de que el backend Django tenga configurado CORS correctamente para pe
 - **Responsive design** con CSS moderno
 - **TypeScript** para type safety
 
-## Despliegue
-
-### Servidor estático (Nginx ejemplo)
-
-1. Genere el build de producción:
-```bash
-npm run build
-```
-
-2. Configure Nginx para servir los archivos de `dist/demo/browser/`:
-
-```nginx
-server {
-    listen 80;
-    server_name midominio.com;
-    root /path/to/dist/demo/browser;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-}
-```
-
-### Docker (opcional)
-
-Puede crear un Dockerfile para containerizar la aplicación:
-
-```dockerfile
-FROM node:18 AS build
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
-
-FROM nginx:alpine
-COPY --from=build /app/dist/demo/browser /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
-```
 
 ## Notas de Desarrollo
 
 - Nunca hardcodee URLs de API en componentes, use siempre `environment.ts`
 - Los servicios manejan toda la comunicación con la API
-- Los componentes son standalone para mejor tree-shaking
 - El código sigue las convenciones de Angular y TypeScript
 - Se implementan loading states y empty states para mejor UX
 
